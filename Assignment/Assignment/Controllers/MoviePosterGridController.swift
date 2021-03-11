@@ -8,11 +8,13 @@
 import UIKit
 
 class MoviePosterGridController: UIViewController {
+    @IBOutlet weak var posterCollectionView: UICollectionView!
+
     private var gridViewModel = MoviePosterGridViewModel()
     private var posterList:[MoviePosterGrid] = [] {
         didSet{
             DispatchQueue.main.async {
-                
+                self.posterCollectionView.reloadData()
             }
         }
     }
@@ -20,11 +22,10 @@ class MoviePosterGridController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        customSetting()
         addViewModelListeners()
         gridViewModel.getMoviesPosterList(page:1)
     }
-
-
 }
 
 //MARK:- Private Methods
@@ -37,6 +38,33 @@ extension MoviePosterGridController {
                 }
             }
         }
+    }
+    
+    private func customSetting() {
+        posterCollectionView.register(PosterCell.nib, forCellWithReuseIdentifier: PosterCell.identifier)
+    }
+    
+}
+
+extension MoviePosterGridController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize.init(width: UIScreen.main.bounds.size.width / 2 , height: UIScreen.main.bounds.size.height / 3)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.posterList.count
+    }
+    
+    // make a cell for each cell index path
+    internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCell.identifier, for: indexPath) as! PosterCell
+        cell.setData(grid: self.posterList[indexPath.row])
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
     }
     
 }
