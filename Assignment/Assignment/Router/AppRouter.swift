@@ -1,5 +1,5 @@
 //
-//  Router.swift
+//  AppRouter.swift
 //  Assignment
 //
 //  Created by Savleen on 11/03/21.
@@ -9,7 +9,8 @@ import Foundation
 import UIKit
 
 enum Route: String {
-      case posterDetail
+    case posterDetail
+    case filter
     case none
 }
 
@@ -32,14 +33,25 @@ class AppRouter: Router {
         case .posterDetail:
             if let params = parameters {
                 if let grid = params as? MoviePosterGrid {
-                    let vc = Utility.getViewController(ofType: MoviePosterGridDetailViewController.self)
+                    let vc = self.getViewController(ofType: MoviePosterGridDetailViewController.self)
                     vc.setGrid(grid: grid)
                     context.navigationController?.pushViewController(vc, animated: true)
                 }
             }
             break
+        case .filter:
+            let vc = self.getViewController(ofType: MovieFilterViewController.self)
+            vc.setDelegate(delegate: context as! MovieFilterDelegate)
+            context.navigationController?.pushViewController(vc, animated: true)
         default:
             break
         }
+    }
+    
+    
+    // MARK: - Get ViewController From Storyboard
+    private func getViewController<T:UIViewController>(ofType viewController:T.Type) -> T
+    {
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: String(describing: type(of: T()))) as! T
     }
 }

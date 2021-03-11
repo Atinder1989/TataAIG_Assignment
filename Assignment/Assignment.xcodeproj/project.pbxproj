@@ -33,9 +33,10 @@
 		B29FC36025F9DC4500564527 /* PosterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B29FC35E25F9DC4500564527 /* PosterCell.xib */; };
 		B29FC36525F9DC8000564527 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29FC36425F9DC8000564527 /* UIView+Extension.swift */; };
 		B29FC36A25F9DF8F00564527 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29FC36925F9DF8F00564527 /* UIImageView+Extension.swift */; };
-		B29FC37025F9F95E00564527 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29FC36F25F9F95E00564527 /* Router.swift */; };
+		B29FC37025F9F95E00564527 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29FC36F25F9F95E00564527 /* AppRouter.swift */; };
 		B29FC37825F9FC2400564527 /* MoviePosterGridDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29FC37725F9FC2400564527 /* MoviePosterGridDetailViewController.swift */; };
 		B29FC37D25FA027E00564527 /* constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29FC37C25FA027E00564527 /* constant.swift */; };
+		B29FC38725FA242700564527 /* MovieFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29FC38625FA242700564527 /* MovieFilterViewController.swift */; };
 		DB48EB505C0A88E2FCFF53DF /* Pods_Assignment_AssignmentUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0266282FD020D51DA7978681 /* Pods_Assignment_AssignmentUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -93,9 +94,10 @@
 		B29FC35E25F9DC4500564527 /* PosterCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PosterCell.xib; sourceTree = "<group>"; };
 		B29FC36425F9DC8000564527 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		B29FC36925F9DF8F00564527 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
-		B29FC36F25F9F95E00564527 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		B29FC36F25F9F95E00564527 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
 		B29FC37725F9FC2400564527 /* MoviePosterGridDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviePosterGridDetailViewController.swift; sourceTree = "<group>"; };
 		B29FC37C25FA027E00564527 /* constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constant.swift; sourceTree = "<group>"; };
+		B29FC38625FA242700564527 /* MovieFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieFilterViewController.swift; sourceTree = "<group>"; };
 		E70C21EC972D0EAE61AA9F1B /* Pods-AssignmentTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AssignmentTests.release.xcconfig"; path = "Target Support Files/Pods-AssignmentTests/Pods-AssignmentTests.release.xcconfig"; sourceTree = "<group>"; };
 		E9ADB362586D77C1F100F116 /* Pods-AssignmentTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AssignmentTests.debug.xcconfig"; path = "Target Support Files/Pods-AssignmentTests/Pods-AssignmentTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F6ABF309E51EF47793189FAA /* Pods-Assignment-AssignmentUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Assignment-AssignmentUITests.debug.xcconfig"; path = "Target Support Files/Pods-Assignment-AssignmentUITests/Pods-Assignment-AssignmentUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 			children = (
 				B29FC2D625F9C77B00564527 /* MoviePosterGridController.swift */,
 				B29FC37725F9FC2400564527 /* MoviePosterGridDetailViewController.swift */,
+				B29FC38625FA242700564527 /* MovieFilterViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -269,7 +272,7 @@
 		B29FC36E25F9F94E00564527 /* Router */ = {
 			isa = PBXGroup;
 			children = (
-				B29FC36F25F9F95E00564527 /* Router.swift */,
+				B29FC36F25F9F95E00564527 /* AppRouter.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -543,7 +546,7 @@
 				B29FC32125F9CD1B00564527 /* Utility.swift in Sources */,
 				B29FC31825F9CBA000564527 /* ServiceManager.swift in Sources */,
 				B29FC31525F9CBA000564527 /* Service.swift in Sources */,
-				B29FC37025F9F95E00564527 /* Router.swift in Sources */,
+				B29FC37025F9F95E00564527 /* AppRouter.swift in Sources */,
 				B29FC31925F9CBA000564527 /* ServiceParsingKeys.swift in Sources */,
 				B29FC36525F9DC8000564527 /* UIView+Extension.swift in Sources */,
 				B29FC2D325F9C77B00564527 /* AppDelegate.swift in Sources */,
@@ -557,6 +560,7 @@
 				B29FC37825F9FC2400564527 /* MoviePosterGridDetailViewController.swift in Sources */,
 				B29FC35025F9D8C600564527 /* MoviePosterGridResponse.swift in Sources */,
 				B29FC33B25F9D0D000564527 /* MoviePosterGridViewModel.swift in Sources */,
+				B29FC38725FA242700564527 /* MovieFilterViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

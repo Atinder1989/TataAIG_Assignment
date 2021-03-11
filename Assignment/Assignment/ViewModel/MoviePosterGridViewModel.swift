@@ -8,7 +8,8 @@
 import Foundation
 
 enum Event {
-    case posterClick(grid:MoviePosterGrid)
+    case posterTap(grid:MoviePosterGrid)
+    case filterTap
     case none
 }
 
@@ -18,10 +19,49 @@ protocol AppViewModel {
 
 class MoviePosterGridViewModel:AppViewModel  {
     var dataClosure : (() -> Void)?
-    var routeToDetailClosure : ((_ grid:MoviePosterGrid) -> Void)?
+    var filterDataClosure : (() -> Void)?
+    var routeToPosterDetailClosure : ((_ grid:MoviePosterGrid) -> Void)?
+    var routeToFilterClosure : (() -> Void)?
     var moviePosterGridResponse: MoviePosterGridResponse?
+    
+    private var isChangeFilter = false
+    private var filterType: Filter = .none {
+        didSet{
+            DispatchQueue.main.async { [weak self] in
+                if let this = self {
+                if let response = this.moviePosterGridResponse {
+                    let list = this.applyFilterToList(list: response.posterlist)
+                    this.moviePosterGridResponse?.posterlist = list
+                    if !this.isChangeFilter {
+                        if let closure = this.dataClosure {
+                            closure()
+                        }
+                    } else {
+                        if let closure = this.filterDataClosure {
+                            closure()
+                        }
+                    }
+                }
+                }
+                
+            }
+        }
+    }
+    
+    private func applyFilterToList(list:[MoviePosterGrid]) -> [MoviePosterGrid]{
+        switch self.filterType {
+        case .highestrated:
+            return list.sorted{ $0.vote_average < $1.vote_average}
+        case .mostpopular:
+            return list.sorted{ $0.popularity < $1.popularity}
+        default:
+            break
+        }
+        return []
+    }
 
-    func getMoviesPosterList(page:Int) {
+    func getMoviesPosterList(page:Int,filterType:Filter) {
+        isChangeFilter = false
         var service = Service.init(httpMethod: .GET)
         service.url = ServiceHelper.moviesPosterUrl(page: page)
 
@@ -34,9 +74,7 @@ class MoviePosterGridViewModel:AppViewModel  {
             } else {
                 if let res = responseVo {
                     self.moviePosterGridResponse = res
-                    if let closure = self.dataClosure {
-                        closure()
-                    }
+                    self.filterType = filterType
                 }
             }
         }
@@ -44,12 +82,21 @@ class MoviePosterGridViewModel:AppViewModel  {
     
     func handleEvent(event:Event) {
         switch event {
-        case .posterClick(grid: let grid):
-            if let closure = self.routeToDetailClosure{
+        case .posterTap(grid: let grid):
+            if let closure = self.routeToPosterDetailClosure{
                 closure(grid)
+            }
+        case .filterTap:
+            if let closure = self.routeToFilterClosure{
+                closure()
             }
         default:break
         }
+    }
+    
+    func changeFilter(type:Filter) {
+        self.filterType = type
+        isChangeFilter = true
     }
 }
 

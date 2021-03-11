@@ -11,6 +11,8 @@ class MoviePosterGridController: UIViewController {
     @IBOutlet weak var posterCollectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
 
+    
+    
     private var searchActive : Bool = false
     private var router: AppRouter?
     private var gridViewModel = MoviePosterGridViewModel()
@@ -21,7 +23,6 @@ class MoviePosterGridController: UIViewController {
             }
         }
     }
-    
     private var filterList:[MoviePosterGrid] = [] {
         didSet{
             DispatchQueue.main.async {
@@ -29,14 +30,13 @@ class MoviePosterGridController: UIViewController {
             }
         }
     }
-
-    
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         customSetting()
         addViewModelListeners()
-        gridViewModel.getMoviesPosterList(page:1)
+        gridViewModel.getMoviesPosterList(page:1, filterType: .highestrated)
     }
 }
 
@@ -67,10 +67,26 @@ extension MoviePosterGridController {
             }
         }
         
-        self.gridViewModel.routeToDetailClosure = {[weak self] grid in
+        self.gridViewModel.filterDataClosure = {[weak self] in
+            if let this = self {
+                if let response = this.gridViewModel.moviePosterGridResponse {
+                    this.posterList = response.posterlist
+                }
+            }
+        }
+        
+        self.gridViewModel.routeToPosterDetailClosure = {[weak self] grid in
             if let this = self {
                 if let router = this.router {
                     router.route(to: .posterDetail, from: this, parameters: grid)
+                }
+            }
+        }
+        
+        self.gridViewModel.routeToFilterClosure = {[weak self] in
+            if let this = self {
+                if let router = this.router {
+                    router.route(to: .filter, from: this, parameters: nil)
                 }
             }
         }
@@ -80,6 +96,12 @@ extension MoviePosterGridController {
     private func customSetting() {
         self.router = AppRouter.init(viewModel: self.gridViewModel)
         posterCollectionView.register(PosterCell.nib, forCellWithReuseIdentifier: PosterCell.identifier)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "filter", style: .plain, target: self, action: #selector(filterTap))
+    }
+    
+    @objc private func filterTap(){
+        self.gridViewModel.handleEvent(event: .filterTap)
+
     }
     
 }
@@ -109,11 +131,18 @@ extension MoviePosterGridController: UICollectionViewDataSource, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if searchActive {
-        self.gridViewModel.handleEvent(event: .posterClick(grid: self.filterList[indexPath.row]))
+        self.gridViewModel.handleEvent(event: .posterTap(grid: self.filterList[indexPath.row]))
         } else {
-            self.gridViewModel.handleEvent(event: .posterClick(grid: self.posterList[indexPath.row]))
+            self.gridViewModel.handleEvent(event: .posterTap(grid: self.posterList[indexPath.row]))
 
         }
     }
     
+}
+
+extension MoviePosterGridController: MovieFilterDelegate{
+    func didSelectFilter(filter:Filter){
+        self.gridViewModel.changeFilter(type: filter)
+    }
+
 }

@@ -73,11 +73,7 @@ class Utility {
             view.layer.masksToBounds = true
         }
   
-    // MARK: - Get ViewController From Storyboard
-    static func getViewController<T:UIViewController>(ofType viewController:T.Type) -> T
-    {
-        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: String(describing: type(of: T()))) as! T
-    }
+    
     
     // MARK: - Show Alert
     static func showAlert(title: String, message: String) {
