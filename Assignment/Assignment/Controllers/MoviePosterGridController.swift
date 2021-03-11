@@ -9,7 +9,9 @@ import UIKit
 
 class MoviePosterGridController: UIViewController {
     @IBOutlet weak var posterCollectionView: UICollectionView!
+    @IBOutlet weak var searchBar: UISearchBar!
 
+    private var searchActive : Bool = false
     private var router: AppRouter?
     private var gridViewModel = MoviePosterGridViewModel()
     private var posterList:[MoviePosterGrid] = [] {
@@ -20,6 +22,15 @@ class MoviePosterGridController: UIViewController {
         }
     }
     
+    private var filterList:[MoviePosterGrid] = [] {
+        didSet{
+            DispatchQueue.main.async {
+                self.posterCollectionView.reloadData()
+            }
+        }
+    }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -28,6 +39,21 @@ class MoviePosterGridController: UIViewController {
         gridViewModel.getMoviesPosterList(page:1)
     }
 }
+
+//MARK:- Private Methods
+extension MoviePosterGridController:UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.count == 0 {
+            searchActive = false;
+            searchBar.resignFirstResponder()
+            self.posterCollectionView.reloadData()
+        } else {
+            searchActive = true
+            self.filterList = self.posterList.filter({$0.original_title.contains(searchText)})
+        }
+    }
+}
+ 
 
 //MARK:- Private Methods
 extension MoviePosterGridController {
@@ -65,17 +91,29 @@ extension MoviePosterGridController: UICollectionViewDataSource, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if searchActive {
+            return filterList.count
+        }
         return self.posterList.count
     }
     
     internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCell.identifier, for: indexPath) as! PosterCell
-        cell.setData(grid: self.posterList[indexPath.row])
+        if searchActive {
+            cell.setData(grid: self.filterList[indexPath.row])
+        }   else {
+            cell.setData(grid: self.posterList[indexPath.row])
+        }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.gridViewModel.handleEvent(event: .posterClick(grid: self.posterList[indexPath.row]))
+        if searchActive {
+        self.gridViewModel.handleEvent(event: .posterClick(grid: self.filterList[indexPath.row]))
+        } else {
+            self.gridViewModel.handleEvent(event: .posterClick(grid: self.posterList[indexPath.row]))
+
+        }
     }
     
 }
