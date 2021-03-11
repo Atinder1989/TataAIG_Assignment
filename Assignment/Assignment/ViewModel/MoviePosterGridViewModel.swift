@@ -7,8 +7,18 @@
 
 import Foundation
 
-class MoviePosterGridViewModel:NSObject  {
+enum Event {
+    case posterClick(grid:MoviePosterGrid)
+    case none
+}
+
+protocol AppViewModel {
+    
+}
+
+class MoviePosterGridViewModel:AppViewModel  {
     var dataClosure : (() -> Void)?
+    var routeToDetailClosure : ((_ grid:MoviePosterGrid) -> Void)?
     var moviePosterGridResponse: MoviePosterGridResponse?
 
     func getMoviesPosterList(page:Int) {
@@ -29,6 +39,16 @@ class MoviePosterGridViewModel:NSObject  {
                     }
                 }
             }
+        }
+    }
+    
+    func handleEvent(event:Event) {
+        switch event {
+        case .posterClick(grid: let grid):
+            if let closure = self.routeToDetailClosure{
+                closure(grid)
+            }
+        default:break
         }
     }
 }

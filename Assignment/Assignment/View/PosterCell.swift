@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SDWebImage
 
 class PosterCell: UICollectionViewCell {
     @IBOutlet weak var posterImageView: UIImageView!
@@ -17,7 +16,7 @@ class PosterCell: UICollectionViewCell {
     }
     
     func setData(grid:MoviePosterGrid) {
-        let imageUrl = "https://image.tmdb.org/t/p/w185" + "\(grid.poster_path)"
+        let imageUrl = imagebaseUrl + "\(grid.poster_path)"
         self.posterImageView.setImageWith(urlString: imageUrl)
     }
 

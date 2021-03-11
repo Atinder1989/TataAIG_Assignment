@@ -10,6 +10,7 @@ import UIKit
 class MoviePosterGridController: UIViewController {
     @IBOutlet weak var posterCollectionView: UICollectionView!
 
+    private var router: AppRouter?
     private var gridViewModel = MoviePosterGridViewModel()
     private var posterList:[MoviePosterGrid] = [] {
         didSet{
@@ -31,6 +32,7 @@ class MoviePosterGridController: UIViewController {
 //MARK:- Private Methods
 extension MoviePosterGridController {
     private func addViewModelListeners() {
+        
         self.gridViewModel.dataClosure = {[weak self] in
             if let this = self {
                 if let response = this.gridViewModel.moviePosterGridResponse {
@@ -38,9 +40,19 @@ extension MoviePosterGridController {
                 }
             }
         }
+        
+        self.gridViewModel.routeToDetailClosure = {[weak self] grid in
+            if let this = self {
+                if let router = this.router {
+                    router.route(to: .posterDetail, from: this, parameters: grid)
+                }
+            }
+        }
+        
     }
     
     private func customSetting() {
+        self.router = AppRouter.init(viewModel: self.gridViewModel)
         posterCollectionView.register(PosterCell.nib, forCellWithReuseIdentifier: PosterCell.identifier)
     }
     
@@ -56,7 +68,6 @@ extension MoviePosterGridController: UICollectionViewDataSource, UICollectionVie
         return self.posterList.count
     }
     
-    // make a cell for each cell index path
     internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCell.identifier, for: indexPath) as! PosterCell
         cell.setData(grid: self.posterList[indexPath.row])
@@ -64,7 +75,7 @@ extension MoviePosterGridController: UICollectionViewDataSource, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        self.gridViewModel.handleEvent(event: .posterClick(grid: self.posterList[indexPath.row]))
     }
     
 }

@@ -52,6 +52,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Movies List" id="5Zf-Zw-bSQ"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="posterCollectionView" destination="Bgd-D5-W5u" id="jaD-64-wrA"/>
                     </connections>
@@ -59,6 +60,67 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1050.7246376811595" y="55.580357142857139"/>
+        </scene>
+        <!--Movie Poster Grid Detail View Controller-->
+        <scene sceneID="MX9-dd-d0c">
+            <objects>
+                <viewController storyboardIdentifier="MoviePosterGridDetailViewController" id="KUA-D1-3gm" customClass="MoviePosterGridDetailViewController" customModule="Assignment" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5Q6-Zq-nBh">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Z9g-5G-Mb9">
+                                <rect key="frame" x="82" y="138" width="250" height="250"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="250" id="Ok9-zV-Olb"/>
+                                    <constraint firstAttribute="height" constant="250" id="bNl-aa-fhp"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sGa-DB-ox6">
+                                <rect key="frame" x="20" y="104" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="STF-OW-IRb">
+                                <rect key="frame" x="352" y="104" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MW9-Ow-qQ1">
+                                <rect key="frame" x="0.0" y="454" width="414" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Ldk-3D-v31"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Z9g-5G-Mb9" firstAttribute="centerX" secondItem="5Q6-Zq-nBh" secondAttribute="centerX" id="0Qw-V6-HZh"/>
+                            <constraint firstItem="sGa-DB-ox6" firstAttribute="leading" secondItem="Ldk-3D-v31" secondAttribute="leading" constant="20" id="4LF-27-Iar"/>
+                            <constraint firstItem="sGa-DB-ox6" firstAttribute="top" secondItem="Ldk-3D-v31" secondAttribute="top" constant="16" id="UNe-rR-BpV"/>
+                            <constraint firstItem="Ldk-3D-v31" firstAttribute="trailing" secondItem="STF-OW-IRb" secondAttribute="trailing" constant="20" id="f4j-Fz-bmr"/>
+                            <constraint firstItem="STF-OW-IRb" firstAttribute="top" secondItem="Ldk-3D-v31" secondAttribute="top" constant="16" id="oKq-8r-i78"/>
+                            <constraint firstItem="Ldk-3D-v31" firstAttribute="trailing" secondItem="MW9-Ow-qQ1" secondAttribute="trailing" id="qfQ-Mo-ewN"/>
+                            <constraint firstItem="Z9g-5G-Mb9" firstAttribute="top" secondItem="Ldk-3D-v31" secondAttribute="top" constant="50" id="uqK-m4-lR4"/>
+                            <constraint firstItem="MW9-Ow-qQ1" firstAttribute="centerX" secondItem="5Q6-Zq-nBh" secondAttribute="centerX" id="vyF-bQ-eVA"/>
+                            <constraint firstItem="MW9-Ow-qQ1" firstAttribute="top" secondItem="Z9g-5G-Mb9" secondAttribute="bottom" constant="66" id="wmW-h1-GMv"/>
+                            <constraint firstItem="MW9-Ow-qQ1" firstAttribute="leading" secondItem="Ldk-3D-v31" secondAttribute="leading" id="zDk-tj-rjq"/>
+                        </constraints>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="overviewLbl" destination="MW9-Ow-qQ1" id="9iJ-CQ-YJm"/>
+                        <outlet property="posterImageView" destination="Z9g-5G-Mb9" id="uAs-xe-BEX"/>
+                        <outlet property="ratingLbl" destination="STF-OW-IRb" id="Vu9-GB-p0l"/>
+                        <outlet property="realeaseDateLbl" destination="sGa-DB-ox6" id="BqK-zp-NlE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W2a-0Z-6G6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1811.594202898551" y="55.580357142857139"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="v3L-Yr-zJx">
