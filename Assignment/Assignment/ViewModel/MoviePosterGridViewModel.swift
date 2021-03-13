@@ -10,6 +10,7 @@ import Foundation
 enum Event {
     case posterTap(grid:MoviePosterGrid)
     case filterTap
+    case nextPage
     case none
 }
 
@@ -48,6 +49,20 @@ class MoviePosterGridViewModel:AppViewModel  {
         }
     }
     
+}
+
+
+//MARK:- Private Methods
+extension MoviePosterGridViewModel {
+    private func getNextPagePosterList(){
+        if let response = self.moviePosterGridResponse {
+            let newPage = response.page + 1
+            if newPage <= response.total_pages {
+                self.getMoviesPosterList(page:newPage, filterType: .highestrated)
+            }
+        }
+    }
+    
     private func applyFilterToList(list:[MoviePosterGrid]) -> [MoviePosterGrid]{
         switch self.filterType {
         case .highestrated:
@@ -59,7 +74,10 @@ class MoviePosterGridViewModel:AppViewModel  {
         }
         return []
     }
+}
 
+//MARK:- Public Methods
+extension MoviePosterGridViewModel {
     func getMoviesPosterList(page:Int,filterType:Filter) {
         isChangeFilter = false
         var service = Service.init(httpMethod: .GET)
@@ -73,7 +91,16 @@ class MoviePosterGridViewModel:AppViewModel  {
                 }
             } else {
                 if let res = responseVo {
-                    self.moviePosterGridResponse = res
+                    if let gridResponse = self.moviePosterGridResponse {
+                        var oldResponse = gridResponse
+                        oldResponse.page = res.page
+                        oldResponse.total_pages = res.total_pages
+                        oldResponse.total_results = res.total_results
+                        oldResponse.posterlist = res.posterlist
+                        self.moviePosterGridResponse = oldResponse
+                    }else {
+                        self.moviePosterGridResponse = res
+                    }
                     self.filterType = filterType
                 }
             }
@@ -90,6 +117,8 @@ class MoviePosterGridViewModel:AppViewModel  {
             if let closure = self.routeToFilterClosure{
                 closure()
             }
+        case .nextPage:
+            self.getNextPagePosterList()
         default:break
         }
     }
@@ -98,6 +127,5 @@ class MoviePosterGridViewModel:AppViewModel  {
         self.filterType = type
         isChangeFilter = true
     }
+    
 }
-
-

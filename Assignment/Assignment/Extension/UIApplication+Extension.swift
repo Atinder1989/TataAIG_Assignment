@@ -1,9 +1,8 @@
 //
-//  File.swift
-//  JioMusic
+//  UIApplication+Extension.swift
+//  Assignment
 //
-//  Created by Atinderpal Singh on 03/04/18.
-//  Copyright © 2018 Reliance Jio Infocomm Ltd. All rights reserved.
+//  Created by Savleen on 11/03/21.
 //
 
 import Foundation

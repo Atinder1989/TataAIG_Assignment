@@ -47,6 +47,8 @@ extension MovieFilterViewController:UITableViewDataSource,UITableViewDelegate {
         if let delegate = self.delegate {
             delegate.didSelectFilter(filter: filterList[indexPath.row])
         }
-        self.navigationController?.popViewController(animated: true)
+        if let navController = self.navigationController {
+            navController.popViewController(animated: true)
+        }
     }
 }

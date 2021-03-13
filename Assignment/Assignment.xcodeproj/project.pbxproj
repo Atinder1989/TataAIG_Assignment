@@ -237,7 +237,6 @@
 			isa = PBXGroup;
 			children = (
 				B29FC33A25F9D0D000564527 /* MoviePosterGridViewModel.swift */,
-				B29FC35425F9D8E000564527 /* MoviePosterGrid.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -246,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				B29FC34F25F9D8C600564527 /* MoviePosterGridResponse.swift */,
+				B29FC35425F9D8E000564527 /* MoviePosterGrid.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";

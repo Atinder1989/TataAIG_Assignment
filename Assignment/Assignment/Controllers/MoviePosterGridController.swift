@@ -10,9 +10,8 @@ import UIKit
 class MoviePosterGridController: UIViewController {
     @IBOutlet weak var posterCollectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
-
     
-    
+    private var initialPage = 1
     private var searchActive : Bool = false
     private var router: AppRouter?
     private var gridViewModel = MoviePosterGridViewModel()
@@ -36,11 +35,11 @@ class MoviePosterGridController: UIViewController {
         // Do any additional setup after loading the view.
         customSetting()
         addViewModelListeners()
-        gridViewModel.getMoviesPosterList(page:1, filterType: .highestrated)
+        gridViewModel.getMoviesPosterList(page:initialPage, filterType: .highestrated)
     }
 }
 
-//MARK:- Private Methods
+//MARK:- UISearchBarDelegate
 extension MoviePosterGridController:UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.count == 0 {
@@ -101,11 +100,11 @@ extension MoviePosterGridController {
     
     @objc private func filterTap(){
         self.gridViewModel.handleEvent(event: .filterTap)
-
     }
     
 }
 
+//MARK:- UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout
 extension MoviePosterGridController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -138,11 +137,17 @@ extension MoviePosterGridController: UICollectionViewDataSource, UICollectionVie
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row == self.posterList.count - 1 {
+            self.gridViewModel.handleEvent(event: .nextPage)
+        }
+    }
+    
 }
 
+//MARK:- MovieFilterDelegate
 extension MoviePosterGridController: MovieFilterDelegate{
     func didSelectFilter(filter:Filter){
         self.gridViewModel.changeFilter(type: filter)
     }
-
 }

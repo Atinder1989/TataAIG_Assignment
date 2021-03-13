@@ -16,7 +16,7 @@ class MoviePosterGridDetailViewController: UIViewController {
     private var grid :MoviePosterGrid!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.createUI()
+        self.updateUI()
     }
 
 }
@@ -30,7 +30,7 @@ extension MoviePosterGridDetailViewController {
 
 //MARK:- Private Methods
 extension MoviePosterGridDetailViewController {
-    func createUI() {
+    func updateUI() {
         self.title = self.grid.original_title
         let imageUrl = imagebaseUrl + "\(grid.poster_path)"
         self.posterImageView.setImageWith(urlString: imageUrl)

@@ -1,9 +1,8 @@
 //
-//  WebserviceParameter.swift
+//  Service.swift
 //  Assignment
 //
-//  Created by Atinderpal Singh on 05/02/19.
-//  Copyright © 2019 Abc. All rights reserved.
+//  Created by Savleen on 11/03/21.
 //
 
 import Foundation
