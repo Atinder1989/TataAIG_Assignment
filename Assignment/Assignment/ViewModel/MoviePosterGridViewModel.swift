@@ -85,7 +85,6 @@ extension MoviePosterGridViewModel {
 
         ServiceManager.processDataFromServer(service: service, model: MoviePosterGridResponse.self) { (responseVo, error) in
             if let e = error {
-                print("Error = ", e.localizedDescription)
                 if let closure = self.dataClosure {
                     closure()
                 }
